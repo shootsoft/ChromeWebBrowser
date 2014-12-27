@@ -1,0 +1,926 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        ul li {
+            font-weight:bold;
+            font-size:18px;
+        }
+            ul li table {
+                font-size : 12px;
+            font-weight:normal;
+            }
+        .code {
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>方法</h1>
+    <ul>
+        <li>ChromeWebBrowser<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >ChromeWebBrowser(CSharpBrowserSettings settings)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>settings</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>浏览器控件的初始化参数.CSharpBrowserSettings类定义了以下参数:<br/>
+                        CachePath, Locale, LocaleDirPath, UserAgent
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        CSharpBrowserSettings settings = new CSharpBrowserSettings();<br />
+                        settings.UserAgent = "My Browser 1.0.4.0";<br />
+                        settings.CachePath = @"C:\temp\caches";<br />
+                        ChromeWebBrowser browser = new ChromeWebBrowser(settings);<br />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>构造函数.构造函数有两个重载方法,一个是不带settings函数,这种是将不设置浏览器参数。</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Initialize<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public int Initialize(CSharpBrowserSettings settings)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>settings</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>浏览器控件的初始化参数.CSharpBrowserSettings类定义了以下参数::<br/>
+                        CachePath, Locale, LocaleDirPath, UserAgent
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        CSharpBrowserSettings settings = new CSharpBrowserSettings();<br />
+                        settings.UserAgent = "My Browser 1.0.4.0";<br />
+                        settings.CachePath = @"C:\temp\caches";<br />
+                        ChromeWebBrowser browser = new ChromeWebBrowser()<br />
+                        browser.Initialize(settings);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">返回:</td>
+                    <td>0:成功, -1:失败</td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>初始化浏览器环境。</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Free<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Free()</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>none.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>窗口关闭的时候调用。 
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        browser.Free();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>Free the browser.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>OpenUrl<br/>
+            <table>
+                <tr>
+                    <td align="right" valign="top">语法:
+                    </td>
+                    <td >public void OpenUrl(string Url)<br/>
+                        public void OpenUrl(object request)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>Url: 打开指定的网址.<br />
+                        request：在NewWindow事件中使用.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子 1:</td>
+                    <td><span class="code">
+                        browser.OpenUrl(newUrl);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子 2:</td>
+                    <td><span class="code">
+                        private void NewPage(string newUrl,object req)<br />
+                        {<br />
+                            &nbsp; &nbsp;TabPage newPage = new TabPage(newUrl);<br />
+                            &nbsp; &nbsp;tabControl1.TabPages.Add(newPage);<br />
+                            &nbsp; &nbsp;tabControl1.SelectTab(newPage);<br />
+                            &nbsp; &nbsp;ChromeWebBrowser browser = new ChromeWebBrowser();<br />
+                            &nbsp; &nbsp;browser.BrowserNewWindow += new NewWindowEventHandler(chromeWebBrowser1_BrowserNewWindow);<br />
+                            &nbsp; &nbsp;browser.Initialize();<br />
+                            &nbsp; &nbsp;newPage.Controls.Add(browser);<br />
+                            &nbsp; &nbsp;browser.Validate();<br />
+                            &nbsp; &nbsp;browser.Dock = DockStyle.Fill;<br />
+                            &nbsp; &nbsp;if (newUrl.Contains("&"))<br />
+                            &nbsp; &nbsp;    browser.OpenUrl(req);<br />
+                            &nbsp; &nbsp;else<br />
+                            &nbsp; &nbsp;    browser.OpenUrl(newUrl);<br />
+                        }
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>打开指定网址，打开之前必须调用Initialize函数初始化环境。</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SetCookiePath<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void SetCookiePath(string path)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>path</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Cookie保存路径 
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SetCookiePath("c:\\temp");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>设置浏览器cookie保存路径</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>DeleteAllCookies<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void DeleteAllCookies()</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>none.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.DeleteAllCookies();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>删除所有Cookie</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>GetElementValueById<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public string GetElementValueById(string id)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>id.</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>元素对象Id.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        string s = chromeWebBrowser1.GetElementValueById("kw1");<br />
+                        MessageBox.Show(s);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Return value:</td>
+                    <td>根据元素编号找到对象，并返回元素值，如果是Input就返回value，其他就返回InnerHtml.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SetElementValueByid<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void SetElementValueByid(string id, string value)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>Id.</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Element Id.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SetElementValueByid("kw1", "Input words");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>设置元素值，如果是input则为value赋值，其他则设置innerHtml值.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SelectAll<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void SelectAll()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SelectAll();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>全选页面上的文本</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Copy<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Copy()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Copy();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>复制文本</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Paste<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Paste()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Paste();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>粘贴文本.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Reload<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Reload(bool ignoreCache)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>ignoreCache.</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>是否忽略缓存数据.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Reload(true);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>重新加载页面，如果为true则全部从服务器获取资源，反之从缓存中读取。</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Stop<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Stop()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Stop();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>停止当前浏览器加载。</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Back<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Back()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Back();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>返回上一页.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Forward<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Forward()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Forward();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>向前一页</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Undo<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Undo()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Undo();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>撤销对文本编辑的操作</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Redo<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Redo()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Redo();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>重做</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Cut<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Cut()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Cut();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>剪切当前选中的input元素的文本</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Delete<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void Delete()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Delete();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>删除当前选中的input元素的文本.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ViewSource<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void ViewSource()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ViewSource();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>在编辑器中打开网页源码.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>GetSource<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public string GetSource()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        string source = chromeWebBrowser1.GetSource();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>返回当前页面源码.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ShowDevTool<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void ShowDevTool()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ShowDevTool();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>显示开发工具.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SetScreenSize<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void SetScreenSize(int w, int h)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>int w<br/>int h</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>w: 宽.<br/> h:高.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SetScreenSize(480,720);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>设置浏览器分辨率.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ResetScreen<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void ResetScreen()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ResetScreen();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>恢复分辨率。</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>LoadHtml<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void LoadHtml(string htmlText)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>htmlText</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Html文本.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.LoadHtml("test page.");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>加载一段html文本到空白页.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>AppendElementEventListener<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void AppendElementEventListener(string id,string eventName,TCallBackElementEventListener callFunc)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>id,eventName</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>id: 元素id.<br/ >
+                        eventName:元素事件名称，比如  "click".
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        private void appendElementEventToolStripMenuItem_Click(object sender, EventArgs e)<br/>
+                        {<br/>
+                            &nbsp; &nbsp;chromeWebBrowser1.AppendElementEventListener("su", "click", new ChromeWebBrowser.TCallBackElementEventListener(showmsg));<br/>
+                        }<br/>
+                        private void showmsg()<br/>
+                        {<br/>
+                            &nbsp; &nbsp;MessageBox.Show("element listener");<br/>
+                        }
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>为元素附件监听事件，当事件被触发，则调用指定的方法</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ExecuteScript<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void ExecuteScript(string script)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>script</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Javascript代码.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ExecuteScript("alert('executeJavaScript')");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>立即在网页中执行javascrip代码</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>EvaluateScript<br/>
+            <table>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public object EvaluateScript(string script)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>script</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Javascript代码.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Return value:</td>
+                    <td>返回javascript对象</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        Javascript code:<br/>
+                        function getAgent()<br/>
+                        {<br/>
+                          &nbsp; &nbsp;return navigator.userAgent;<br/>
+                        }<br/>
+                        C# code:<br/>
+                        private void evalScriptToolStripMenuItem_Click(object sender, EventArgs e)<br/>
+                        {<br/>
+                            &nbsp; &nbsp;object o = chromeWebBrowser1.EvaluateScript("getAgent();");<br/>
+                            &nbsp; &nbsp;MessageBox.Show(o.ToString());<br/>
+                        }
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>立即执行javascrip代码，并返回javascript对象</td>
+                </tr>
+            </table>
+        </li>
+        
+        <li>AddPluginPath<br/>
+            <table>
+            		<tr>
+                    <td align="right">版本:</td>
+                    <td >v1.0.04</td>
+                </tr>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void AddPluginPath(string PluginPath)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>PluginPath</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>插件路径.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.AddPluginPath(@"c:\windows\system32\NPBCB.dll");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>增加插件</td>
+                </tr>
+            </table>
+        </li>
+        
+        <li>AddPluginDir<br/>
+            <table>
+            	  <tr>
+                    <td align="right">版本:</td>
+                    <td >v1.0.04</td>
+                </tr>
+                <tr>
+                    <td align="right">语法:</td>
+                    <td >public void AddPluginDir(string PluginDir)</td>
+                </tr>
+                <tr>
+                    <td align="right">参数:</td>
+                    <td>PluginDir</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>插件目录.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">例子:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.AddPluginDir(@"c:\windows\system32\");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">备注:</td>
+                    <td>增加插件所在目录</td>
+                </tr>
+            </table>
+        </li>
+    </ul>
+    <br />
+    <h1>事件</h1>
+    <ul>
+    	<li>
+    		BrowserCreated 浏览器控件创建事件
+    	</li>
+    	<li>
+    		BrowserNavigating 浏览器打开前事件
+    	</li>
+    	<li>
+    		BrowserNavigated 浏览器打开后事件
+    	</li>
+    	<li>
+    		BrowserDocumentCompleted 浏览器文档加载完成事件
+    	</li>
+    	<li>
+    		BrowserFrameLoadStart、PageLoadStartEventHandler 某个Frame元素加载页面开始事件
+    	</li>
+    	<li>
+    		BrowserFrameLoadEnd、PageLoadFinishEventhandler 某个Frame元素加载页面结束事件
+    	</li>
+    	<li>
+    		BrowserFrameLoadError 页面加载错误事件
+    	</li>
+    	<li>
+    		BrowserTitleChange 浏览器加载页面时，标题改变事件
+    	</li>
+    	<li>
+    		BrowserUrlChange 浏览器加载页面时，网址改变事件
+    	</li>
+    	<li>
+    		BrowserPreviewKeyDown 浏览器键盘事件
+    	</li>
+    	<li>
+    		BrowserBeforeDownload 文件下载前事件
+    	</li>
+    	<li>
+    		BrowserDownloading 文件下载中事件
+    	</li>
+    	<li>
+    		BrowserNewWindow 新窗口事件
+    	</li>
+    </ul>
+    <h1>类</h1>
+    <ul>
+        <li>CwbDocument<br/>
+            <table>
+                <tr>
+                    <td align="right" valign="top">属性</td>
+                    <td><span class="code">
+                        Cookies 当前页面所有Cookie<br />
+                        Cookie 当前页面所有Cookie组合成字符串<br />
+                        Root 文档根节点，包含了文档中所有子节点<br />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">方法</td>
+                    <td><span class="code">
+                        Load 默认在控件的DocumentCompleted事件中自动调用，也可以手动调用进行重载。<br />
+                        GetElementsByTagName 根据标签获取所有对应的元素<br />
+                        GetElementById 根据ID获取元素<br />
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </li>
+        <li>CwbElement<br/>
+            <table>
+                <tr>
+                    <td align="right" valign="top">属性</td>
+                    <td><span class="code">
+                        Id 元素编号<br />
+                        TagName 元素标签名称<br />
+                        IndexPath 元素路径<br />
+                        ChildElements 所有子元素 <br/>
+                        IsElement 是否元素 <br/>
+                        IsEditable 是否可编辑<br/>
+                        HasChildren 有无子节点<br/>
+                        HasAttributes 有无属性<br/>
+                        Attributes 节点所有属性集合<br/>
+                        InnerText 内文本<br/>
+                        InnerHtml 内html文本<br/>
+                        Value 元素值<br/>
+                        
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">方法</td>
+                    <td><span class="code">
+                        HasAttribute 判断是否有某个属性<br />
+                        GetAttribute 获取属性值<br />
+                        SetAttribute 设置属性值<br />
+                        Click 执行元素点击事件<br/>
+                        AttachEventHandler 增加元素事件侦听器<br/>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,758 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        ul li {
+            font-weight:bold;
+            font-size:18px;
+        }
+            ul li table {
+                font-size : 12px;
+            font-weight:normal;
+            }
+        .code {
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Methods</h1>
+    <ul>
+        <li>ChromeWebBrowser<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >ChromeWebBrowser(CSharpBrowserSettings settings)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>settings</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>The browser initialization parameters.CSharpBrowserSettings defines the following properties:<br/>
+                        CachePath, Locale, LocaleDirPath, UserAgent
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        CSharpBrowserSettings settings = new CSharpBrowserSettings();<br />
+                        settings.UserAgent = "My Browser 1.0.4.0";<br />
+                        settings.CachePath = @"C:\temp\caches";<br />
+                        ChromeWebBrowser browser = new ChromeWebBrowser(settings);<br />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Constructor function.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Initialize<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public int Initialize(CSharpBrowserSettings settings)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>settings</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>The browser initialization parameters.CSharpBrowserSettings defines the following properties:<br/>
+                        CachePath, Locale, LocaleDirPath, UserAgent
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        CSharpBrowserSettings settings = new CSharpBrowserSettings();<br />
+                        settings.UserAgent = "My Browser 1.0.4.0";<br />
+                        settings.CachePath = @"C:\temp\caches";<br />
+                        ChromeWebBrowser browser = new ChromeWebBrowser()<br />
+                        browser.Initialize(settings);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Return value:</td>
+                    <td>0:Success, -1:Failure</td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Initializes the browser.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Free<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Free()</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>none.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Called when the window closes. 
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        browser.Free();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Free the browser.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>OpenUrl<br/>
+            <table>
+                <tr>
+                    <td align="right" valign="top">Syntax:
+                    </td>
+                    <td >public void OpenUrl(string Url)<br/>
+                        public void OpenUrl(object request)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>Url: Will open the specified website.<br />
+                        request：In general, for the NewWindow event.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples 1:</td>
+                    <td><span class="code">
+                        browser.OpenUrl(newUrl);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples 2:</td>
+                    <td><span class="code">
+                        private void NewPage(string newUrl,object req)<br />
+                        {<br />
+                            &nbsp; &nbsp;TabPage newPage = new TabPage(newUrl);<br />
+                            &nbsp; &nbsp;tabControl1.TabPages.Add(newPage);<br />
+                            &nbsp; &nbsp;tabControl1.SelectTab(newPage);<br />
+                            &nbsp; &nbsp;ChromeWebBrowser browser = new ChromeWebBrowser();<br />
+                            &nbsp; &nbsp;browser.BrowserNewWindow += new NewWindowEventHandler(chromeWebBrowser1_BrowserNewWindow);<br />
+                            &nbsp; &nbsp;browser.Initialize();<br />
+                            &nbsp; &nbsp;newPage.Controls.Add(browser);<br />
+                            &nbsp; &nbsp;browser.Validate();<br />
+                            &nbsp; &nbsp;browser.Dock = DockStyle.Fill;<br />
+                            &nbsp; &nbsp;if (newUrl.Contains("&"))<br />
+                            &nbsp; &nbsp;    browser.OpenUrl(req);<br />
+                            &nbsp; &nbsp;else<br />
+                            &nbsp; &nbsp;    browser.OpenUrl(newUrl);<br />
+                        }
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Must be initialized before the browser to open.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SetCookiePath<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void SetCookiePath(string path)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>path</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Cookie storage path. 
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SetCookiePath("c:\\temp");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Set the browser cookie path.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>DeleteAllCookies<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void DeleteAllCookies()</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>none.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.DeleteAllCookies();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Delete all cookie.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>GetElementValueById<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public string GetElementValueById(string id)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>id.</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Element Id.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        string s = chromeWebBrowser1.GetElementValueById("kw1");<br />
+                        MessageBox.Show(s);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Return value:</td>
+                    <td>Return element value by the Id.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SetElementValueByid<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void SetElementValueByid(string id, string value)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>Id.</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Element Id.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SetElementValueByid("kw1", "Input words");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Set element value by the Id.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SelectAll<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void SelectAll()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SelectAll();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Select all the text on the document.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Copy<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Copy()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Copy();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Copy selected text on the document.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Paste<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Paste()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Paste();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Paste text into input element.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Reload<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Reload(bool ignoreCache)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>ignoreCache.</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>true:ignore cache. false: not ignore cache.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Reload(true);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>If "isgnoreCache" is true,so will be download resource from server.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Stop<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Stop()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Stop();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Stop browser loading.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Back<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Back()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Back();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Back the browser.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Forward<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Forward()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Forward();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Forward the browser.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Undo<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Undo()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Undo();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Undo edit content.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Redo<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Redo()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Redo();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Redo edit content.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Cut<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Cut()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Cut();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Cut text.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>Delete<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void Delete()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.Delete();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Delete selected text.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ViewSource<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void ViewSource()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ViewSource();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Show the page source in editor.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>GetSource<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public string GetSource()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        string source = chromeWebBrowser1.GetSource();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Return page source.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ShowDevTool<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void ShowDevTool()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ShowDevTool();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Show DevTools with current page.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>SetScreenSize<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void SetScreenSize(int w, int h)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>int w<br/>int h</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>w: width of resolution.<br/> h:height of resolution.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.SetScreenSize(480,720);
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Set the browser resolution.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ResetScreen<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void ResetScreen()</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ResetScreen();
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Recovery resolution.</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>LoadHtml<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void LoadHtml(string htmlText)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>htmlText</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Html text.</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.LoadHtml("test page.");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Load html text in blank page..</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>AppendElementEventListener<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void AppendElementEventListener(string id,string eventName,TCallBackElementEventListener callFunc)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>id,eventName</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>id: element id.<br/ >
+                        eventName:element event name.like "click".
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        private void appendElementEventToolStripMenuItem_Click(object sender, EventArgs e)<br/>
+                        {<br/>
+                            &nbsp; &nbsp;chromeWebBrowser1.AppendElementEventListener("su", "click", new ChromeWebBrowser.TCallBackElementEventListener(showmsg));<br/>
+                        }<br/>
+                        private void showmsg()<br/>
+                        {<br/>
+                            &nbsp; &nbsp;MessageBox.Show("element listener");<br/>
+                        }
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Append listener to the element</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>ExecuteScript<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public void ExecuteScript(string script)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>script</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Javascript text.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        chromeWebBrowser1.ExecuteScript("alert('executeJavaScript')");
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Immediate execute Javascript in document</td>
+                </tr>
+            </table>
+        </li>
+
+        <li>EvaluateScript<br/>
+            <table>
+                <tr>
+                    <td align="right">Syntax:</td>
+                    <td >public object EvaluateScript(string script)</td>
+                </tr>
+                <tr>
+                    <td align="right">Parameters:</td>
+                    <td>script</td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td>Javascript text.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Return value:</td>
+                    <td>Return the javascript object</td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">Examples:</td>
+                    <td><span class="code">
+                        Javascript code:<br/>
+                        function getAgent()<br/>
+                        {<br/>
+                          &nbsp; &nbsp;return navigator.userAgent;<br/>
+                        }<br/>
+                        C# code:<br/>
+                        private void evalScriptToolStripMenuItem_Click(object sender, EventArgs e)<br/>
+                        {<br/>
+                            &nbsp; &nbsp;object o = chromeWebBrowser1.EvaluateScript("getAgent();");<br/>
+                            &nbsp; &nbsp;MessageBox.Show(o.ToString());<br/>
+                        }
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Remarks:</td>
+                    <td>Execute javascript code and return the result.</td>
+                </tr>
+            </table>
+        </li>
+    </ul>
+</body>
+</html>

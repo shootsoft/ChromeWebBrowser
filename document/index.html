@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script type="text/javascript" src="js/vcl.js"></script>
+    <script type="text/javascript">
+        function main() {
+            var form = new HtmlForm(null);
+            form.align = "center";
+            form.color = "red";
+            form.Refresh();
+
+            var topPanel = new HtmlPanel(form);
+            topPanel.align = "top";
+            topPanel.alignment = "center";
+            topPanel.color = "#000";
+            topPanel.fontSize = 14;
+            topPanel.fontColor = "White";
+            topPanel.text = "<h1>ChromeWebBrowser.net User Guide</h1>";
+            topPanel.Refresh();
+
+            var leftPanel = new HtmlPanel(form);
+            leftPanel.align = "left";
+            leftPanel.color = "#e6e6e6";
+            leftPanel.Refresh();
+
+            var frame = new HtmlFrame(form);
+            frame.align = "center";
+            frame.color = "White";
+            frame.setUrl("pages/method-EN.html");
+            frame.Refresh();
+
+            var bottomPanel = new HtmlPanel(form);
+            bottomPanel.align = "bottom";
+            bottomPanel.alignment = "center";
+            bottomPanel.color = "#000";
+            bottomPanel.height = 25;
+            bottomPanel.fontColor = "White";
+            bottomPanel.text = "@Author: Sashulin Roy";
+            bottomPanel.Refresh();
+
+            var button1 = new HtmlButton(leftPanel);
+            button1.left = 20;
+            button1.top = 0;
+            button1.text = "ZH/EN"
+            button1.imageUrl = "img/lg.png";
+            button1.onclick = function () {
+                if (application.defaultLanguage == "EN") {
+                    application.defaultLanguage = "ZH";
+                }
+                else {
+                    application.defaultLanguage = "EN";
+                }
+                frame.setUrl("pages/method-" + application.defaultLanguage + ".html");
+            }
+            button1.Refresh();
+        }
+        
+    </script>
+</head>
+<body>
+
+</body>
+</html>
